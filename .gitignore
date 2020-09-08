@@ -130,3 +130,6 @@ dmypy.json
 
 # VsCode
 settings.json
+
+# Other Random files
+var/*
