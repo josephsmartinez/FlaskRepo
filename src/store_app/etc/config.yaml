@@ -1,0 +1,11 @@
+mysql:
+    host: localhost
+    user: root
+    passwd: my secret password
+    users_db_name: users
+    users_db_name_path: var/users.db
+    items__db_name: items
+    items_db_name_path: var/items.db
+
+logging:
+    log_path: var/log/application_logs

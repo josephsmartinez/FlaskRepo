@@ -1,9 +1,12 @@
 {
   "folders": [
-	{
-		"path": "."
-	}
-],
+    {
+      "path": "."
+    },
+    {
+      "path": "../python"
+    }
+  ],
   "settings": {
     "python.pythonPath": "/Users/jsonmart/miniconda3/bin/python"
   }

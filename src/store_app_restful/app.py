@@ -30,8 +30,13 @@ jwt = JWT(app, auth, indentity)
 jwt.jwt_error_handler(security_error_handler)
 
 # Configure DataBase
-DataBase.create_user_table(config.USER_DB_PATH, new=True)
-DataBase.create_item_table(config.ITEM_DB_PATH, new=True)
+# Registers a function to be run before the 
+# first request to this instance of the application.
+@app.before_first_request
+def create_tables()
+    DataBase.create_user_table(config.USER_DB_PATH, new=True)
+    DataBase.create_item_table(config.ITEM_DB_PATH, new=True)
+create_tables()
 
 # Configure resources/routes
 api.add_resource(Item, "/item/<string:name>")

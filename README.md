@@ -19,9 +19,13 @@ Walkthroughs:
 https://realpython.com/token-based-authentication-with-flask/  
 https://martin-thoma.com/configuration-files-in-python/  
 https://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/quickstart.html
+https://arac.tecladocode.com/
 
 Create Application Token:
 `echo -n foobar | shasum -a 256`
 
 Packaging:
 `python setup.py sdist`
+
+SQL view
+`command + shift + p && sql open database`
