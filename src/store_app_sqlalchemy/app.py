@@ -16,6 +16,7 @@ from lib.database import DataBase
 # Resources for routes
 from resources.items import Item, ItemList
 from resources.user import UserRegister
+from resources.store import Store, StoreList
 
 # Applications should initialise Colorama
 init(autoreset=True)
@@ -29,20 +30,30 @@ app.secret_key = config.APP_KEY
 jwt = JWT(app, auth, indentity)
 jwt.jwt_error_handler(security_error_handler)
 
-# Configure DataBase
-DataBase.create_user_table(config.USER_DB_PATH, new=True)
-DataBase.create_item_table(config.ITEM_DB_PATH, new=True)
-
 # If set to True, Flask-SQLAlchemy will track modifications of objects and emit signals.
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///var/items.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"
+
+# SQLALCHEMY_BINDS = {"users": "sqlite:///var/users.db", "items": "sqlite:///var/items.db"}
+# app.config["SQLALCHEMY_BINDS"] = SQLALCHEMY_BINDS
+
+
+@app.before_first_request
+def create_table():
+    """
+    Create all tables before the appplication starts.
+    """
+    DataBase.alchemy.init_app(app)
+    DataBase.alchemy.create_all()
+
 
 # Configure resources/routes
 api.add_resource(Item, "/item/<string:name>")
 api.add_resource(ItemList, "/items")
 api.add_resource(UserRegister, "/register")
+api.add_resource(Store, "/store/<string:name>")
+api.add_resource(StoreList, "/stores")
 
 # Init application
 if __name__ == "__main__":
-    DataBase.alchemy.init_app(app)
     app.run(port=5000, debug=True)

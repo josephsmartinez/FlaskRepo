@@ -2,9 +2,18 @@ import sqlite3
 from flask import request
 from flask_restful import Resource, reqparse
 import lib.config as config
+from lib.database import DataBase as db
 
 
-class UserModel:
+class UserModel(db.alchemy.Model):
+
+    # sqlalchemy settings
+    __tablename__ = "users"
+
+    id = db.alchemy.Column(db.alchemy.Integer, primary_key=True)
+    username = db.alchemy.Column(db.alchemy.String(80))
+    password = db.alchemy.Column(db.alchemy.String(80))
+
     def __init__(self, _id, username, password):
         self.id = _id
         self.username = username
