@@ -16,10 +16,9 @@ class ItemModel(db.alchemy.Model):
     store_id = db.alchemy.Column(db.alchemy.Integer, db.alchemy.ForeignKey("stores.id"))
     store = db.alchemy.relationship("StoreModel")
 
-    def __init__(self, name: str, price: float, store_id: str):
+    def __init__(self, name: str, price: float):
         self.name = name
         self.price = price
-        self.store_id = store_id
 
     @classmethod
     def find_by_name(cls, name):

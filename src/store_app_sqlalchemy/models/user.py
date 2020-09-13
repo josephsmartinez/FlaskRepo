@@ -33,3 +33,12 @@ class UserModel(db.alchemy.Model):
     def save_to_db(self):
         db.alchemy.session.add(self)
         db.alchemy.session.commit()
+
+    def delete_from_db(self):
+        db.alchemy.session.delete(self)
+        db.alchemy.session.commit()
+
+    def json(self):
+        # Find the user id.
+        return {"id": self.id, "username": self.username}
+

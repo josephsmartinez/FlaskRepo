@@ -15,7 +15,7 @@ from lib.database import DataBase
 
 # Resources for routes
 from resources.items import Item, ItemList
-from resources.user import UserRegister
+from resources.user import User, UserRegister
 from resources.store import Store, StoreList
 
 # Applications should initialise Colorama
@@ -29,6 +29,7 @@ app.secret_key = config.APP_KEY
 # Configure JWT
 jwt = JWT(app, auth, indentity)
 jwt.jwt_error_handler(security_error_handler)
+app.config["PROPAGATE_EXCEPTIONS"] = True
 
 # If set to True, Flask-SQLAlchemy will track modifications of objects and emit signals.
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -53,6 +54,8 @@ api.add_resource(ItemList, "/items")
 api.add_resource(UserRegister, "/register")
 api.add_resource(Store, "/store/<string:name>")
 api.add_resource(StoreList, "/stores")
+api.add_resource(User, "/user/<int:user_id>")
+
 
 # Init application
 if __name__ == "__main__":

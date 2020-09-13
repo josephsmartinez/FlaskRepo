@@ -4,14 +4,12 @@ from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
 import lib.config as config
 from models.item import ItemModel
+from http import HTTPStatus
 
 
 class Item(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument("price", type=float, required=True, help="This field cannot be left blank!")
-    parser.add_argument(
-        "store_id", type=str, required=True, help="This field cannot be left blank!"
-    )
 
     @jwt_required()
     def get(self, name):
@@ -50,7 +48,6 @@ class Item(Resource):
             item = ItemModel(name, **data)
         else:
             item.price = data.get("price")
-            item.store_id = data.get("store_id")
         item.save_to_db()
         return item.json(), 201
 

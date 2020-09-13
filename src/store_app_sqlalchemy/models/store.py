@@ -10,16 +10,14 @@ class StoreModel(db.alchemy.Model):
     id = db.alchemy.Column(db.alchemy.Integer, primary_key=True)
     name = db.alchemy.Column(db.alchemy.String(80))
 
-    item = db.alchemy.relationship("ItemModel", lazy="dynamic")
+    items = db.alchemy.relationship("ItemModel", lazy="dynamic")
 
-    def __init__(self, name: str, price: float):
+    def __init__(self, name: str):
         self.name = name
 
     @classmethod
     def find_by_name(cls, name):
-        return ItemModel.query.filter_by(
-            name=name
-        ).first()  # SELECT * FROM items WHERE name=name LIMIT 1
+        return StoreModel.query.filter_by(name=name).first()
 
     def save_to_db(self):
         db.alchemy.session.add(self)  # Does both UPDATE and INSERT
